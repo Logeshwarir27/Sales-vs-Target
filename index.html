@@ -7,7 +7,7 @@
 
 <h1>🎉 Congratulations! 🎉</h1>
 
-<h2>Target Achieved</h2>
+<h2 id="agentName">Agent Name</h2>
 
 <button onclick="playSound()">
 Celebrate
@@ -45,4 +45,15 @@ function playSound() {
     });
 
 }
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const agent = params.get("agent");
+
+if(agent){
+    document.getElementById("agentName").innerText =
+    "🎯 " + agent + " achieved the target!";
+}
+
 </script>

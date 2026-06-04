@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Achievement Celebration</title>
+</head>
+<body style="text-align:center; font-family:Arial; margin-top:100px;">
+
+<h1>🎉 Congratulations! 🎉</h1>
+
+<h2>Target Achieved</h2>
+
+<button onclick="playSound()">
+Celebrate
+</button>
+
+<audio id="song">
+    <source src="victory.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function playSound() {
+    document.getElementById("song").play();
+}
+</script>
+
+</body>
+</html>

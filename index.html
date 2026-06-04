@@ -45,15 +45,4 @@ function playSound() {
     });
 
 }
-<script>
-
-const params = new URLSearchParams(window.location.search);
-
-const agent = params.get("agent");
-
-if(agent){
-    document.getElementById("agentName").innerText =
-    "🎯 " + agent + " achieved the target!";
-}
-
 </script>

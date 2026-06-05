@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Achievement Wall</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:20px;
+text-align:center;
+}
+
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+width:250px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+button{
+padding:10px 20px;
+cursor:pointer;
+font-size:16px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🏆 DAILY ACHIEVEMENT WALL</h1>
+
+<div class="container">
+
+<div class="card">
+<h2>Praveen</h2>
+<p>Commitment: 15</p>
+<p>Achievement: 18</p>
+<p><b>120%</b></p>
+
+<button onclick="celebrate('Praveen',18,120)">
+🎉 Celebrate
+</button>
+</div>
+
+<div class="card">
+<h2>Prasanth</h2>
+<p>Commitment: 12</p>
+<p>Achievement: 14</p>
+<p><b>117%</b></p>
+
+<button onclick="celebrate('Prasanth',14,117)">
+🎉 Celebrate
+</button>
+</div>
+
+</div>
+
+<script>
+
+function celebrate(name,achievement,percent){
+
+localStorage.setItem("name",name);
+localStorage.setItem("achievement",achievement);
+localStorage.setItem("percent",percent);
+
+window.location.href="celebrate.html";
+
+}
+
+</script>
+
+</body>
+</html>
 

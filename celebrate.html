@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Celebration</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:black;
+color:white;
+font-family:Arial;
+text-align:center;
+overflow:hidden;
+}
+
+.container{
+margin-top:50px;
+}
+
+h1{
+font-size:70px;
+margin-bottom:20px;
+}
+
+#name{
+font-size:80px;
+font-weight:bold;
+color:gold;
+}
+
+.info{
+font-size:40px;
+margin-top:20px;
+}
+
+img{
+margin-top:30px;
+width:400px;
+border-radius:20px;
+}
+
+button{
+margin-top:30px;
+padding:15px 30px;
+font-size:20px;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎉 CONGRATULATIONS 🎉</h1>
+
+<div id="name"></div>
+
+<div class="info">
+Achievement: <span id="achievement"></span>
+</div>
+
+<div class="info">
+Target Achievement: <span id="percent"></span>%
+</div>
+
+<img src="dance.gif">
+
+<br>
+
+<button onclick="window.location.href='wall.html'">
+⬅ Back to Wall
+</button>
+
+</div>
+
+<audio id="song" autoplay>
+<source src="victory.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+document.getElementById("name").innerHTML =
+localStorage.getItem("name");
+
+document.getElementById("achievement").innerHTML =
+localStorage.getItem("achievement");
+
+document.getElementById("percent").innerHTML =
+localStorage.getItem("percent");
+
+confetti({
+particleCount:400,
+spread:180,
+origin:{y:0.6}
+});
+
+setInterval(function(){
+
+confetti({
+particleCount:150,
+spread:120,
+origin:{x:Math.random(),y:Math.random()}
+});
+
+},3000);
+
+</script>
+
+</body>
+</html>
 

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>Achievement Celebration</title>
 </head>
+
 <body style="text-align:center; font-family:Arial; margin-top:100px;">
 
 <h1>🎉 Congratulations! 🎉</h1>
@@ -10,8 +12,12 @@
 <h2 id="agentName">Agent Name</h2>
 
 <button onclick="playSound()">
-Celebrate
+    Celebrate
 </button>
+
+<br><br>
+
+<img id="gif" src="dance.gif" width="400" style="display:none;">
 
 <audio id="song">
     <source src="victory.mp3" type="audio/mpeg">
@@ -24,25 +30,15 @@ function playSound() {
 
     document.getElementById("song").play();
 
-    confetti({
-        particleCount: 200,
-        spread: 120,
-        origin: { y: 0.6 }
-    });
-
-}
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
-<script>
-function playSound() {
-
-    document.getElementById("song").play();
+    document.getElementById("gif").style.display = "block";
 
     confetti({
         particleCount: 200,
         spread: 120,
         origin: { y: 0.6 }
     });
-
 }
 </script>
+
+</body>
+</html>

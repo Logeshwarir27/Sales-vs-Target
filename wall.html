@@ -1,85 +1,121 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <title>Achievement Wall</title>
 
 <style>
 body{
-font-family:Arial;
-background:#f5f5f5;
+font-family:Arial,sans-serif;
+background:#f4f4f4;
 padding:20px;
 text-align:center;
 }
 
+h1{
+margin-bottom:30px;
+}
+
 .container{
 display:flex;
-flex-wrap:wrap;
 justify-content:center;
 gap:20px;
+flex-wrap:wrap;
 }
 
 .card{
 background:white;
 padding:20px;
-width:250px;
+width:280px;
 border-radius:15px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
+.rank{
+font-size:40px;
+}
+
 button{
 padding:10px 20px;
-cursor:pointer;
 font-size:16px;
+cursor:pointer;
+margin-top:10px;
 }
 </style>
-
 </head>
 
 <body>
 
-<h1>🏆 DAILY ACHIEVEMENT WALL</h1>
+<h1>🏆 DAILY ACHIEVEMENT WALL 🏆</h1>
 
-<div class="container">
-
-<div class="card">
-<h2>Praveen</h2>
-<p>Commitment: 15</p>
-<p>Achievement: 18</p>
-<p><b>120%</b></p>
-
-<button onclick="celebrate('Praveen',18,120)">
-🎉 Celebrate
-</button>
-</div>
-
-<div class="card">
-<h2>Prasanth</h2>
-<p>Commitment: 12</p>
-<p>Achievement: 14</p>
-<p><b>117%</b></p>
-
-<button onclick="celebrate('Prasanth',14,117)">
-🎉 Celebrate
-</button>
-</div>
-
-</div>
+<div class="container" id="cards"></div>
 
 <script>
 
-function celebrate(name,achievement,percent){
+const csvUrl =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vT86iyMQe8vOD42IvzodWizQcMggjYD7PSP71n4MlcgcfwONLnlbn3AwDziRfKX097mHo3RP8PY1oCv/pub?output=csv";
 
-localStorage.setItem("name",name);
-localStorage.setItem("achievement",achievement);
-localStorage.setItem("percent",percent);
+fetch(csvUrl)
+.then(response => response.text())
+.then(csv => {
 
-window.location.href="celebrate.html";
+const rows = csv.trim().split("\n");
+
+const data = [];
+
+for(let i=1;i<rows.length;i++){
+
+const cols = rows[i].split(",");
+
+if(cols.length < 5) continue;
+
+data.push({
+name: cols[0],
+commitment: Number(cols[1]),
+achievement: Number(cols[2]),
+percent: Number(cols[3])
+});
 
 }
+
+data.sort((a,b)=>b.percent-a.percent);
+
+const top3 = data.slice(0,3);
+
+const medals = ["🥇","🥈","🥉"];
+
+const container =
+document.getElementById("cards");
+
+top3.forEach((agent,index)=>{
+
+container.innerHTML += `
+<div class="card">
+
+<div class="rank">${medals[index]}</div>
+
+<h2>${agent.name}</h2>
+
+<p>Achievement: ${agent.achievement}</p>
+
+<h3>${agent.percent}%</h3>
+
+<button onclick="
+localStorage.setItem('name','${agent.name}');
+localStorage.setItem('achievement','${agent.achievement}');
+localStorage.setItem('percent','${agent.percent}');
+window.location.href='celebrate.html';
+">
+🎉 Celebrate
+</button>
+
+</div>
+`;
+
+});
+
+});
 
 </script>
 
 </body>
 </html>
-

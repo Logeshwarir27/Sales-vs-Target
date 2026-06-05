@@ -1,49 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Achievement Wall</title>
+<title>Daily Achievement Wall</title>
 
 <style>
+
 body{
-font-family:Arial,sans-serif;
-background:#f4f4f4;
-padding:20px;
-text-align:center;
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+    text-align:center;
 }
 
-h1{
-margin-bottom:30px;
+.banner{
+    background:gold;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:30px;
+    box-shadow:0 0 15px rgba(0,0,0,.2);
+}
+
+.banner h1{
+    margin:0;
+}
+
+.banner .winner{
+    font-size:40px;
+    font-weight:bold;
+    margin-top:10px;
 }
 
 .container{
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
 }
 
 .card{
-background:white;
-padding:20px;
-width:280px;
-border-radius:15px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+    background:white;
+    width:280px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
 }
 
-.rank{
-font-size:40px;
+.card h2{
+    margin-top:0;
+}
+
+.tag{
+    font-size:18px;
+    font-weight:bold;
+    margin:10px 0;
 }
 
 button{
-padding:10px 20px;
-font-size:16px;
-cursor:pointer;
-margin-top:10px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
 }
+
+button:hover{
+    opacity:.9;
+}
+
 </style>
 </head>
 
 <body>
+
+<div id="championBanner"></div>
 
 <h1>🏆 DAILY ACHIEVEMENT WALL 🏆</h1>
 
@@ -58,61 +88,88 @@ fetch(csvUrl)
 .then(response => response.text())
 .then(csv => {
 
-const rows = csv.trim().split("\n");
+    const rows = csv.trim().split("\n");
 
-const data = [];
+    const data = [];
 
-for(let i=1;i<rows.length;i++){
+    for(let i=1;i<rows.length;i++){
 
-const cols = rows[i].split(",");
+        const cols = rows[i].split(",");
 
-if(cols.length < 5) continue;
+        if(cols.length < 4) continue;
 
-data.push({
-name: cols[0],
-commitment: Number(cols[1]),
-achievement: Number(cols[2]),
-percent: Number(cols[3])
-});
+        data.push({
+            name: cols[0].trim(),
+            commitment: Number(cols[1]),
+            achievement: Number(cols[2]),
+            percent: Number(cols[3])
+        });
+    }
 
-}
+    data.sort((a,b)=>b.percent-a.percent);
 
-data.sort((a,b)=>b.percent-a.percent);
+    const champion = data[0];
 
-const top3 = data.slice(0,3);
+    document.getElementById("championBanner").innerHTML = `
+        <div class="banner">
+            <h1>🏆 CHAMPION OF THE DAY 🏆</h1>
+            <div class="winner">${champion.name}</div>
+            <h2>${champion.percent}% Achievement</h2>
+        </div>
+    `;
 
-const medals = ["🥇","🥈","🥉"];
+    const container = document.getElementById("cards");
 
-const container =
-document.getElementById("cards");
+    data.forEach((agent,index)=>{
 
-top3.forEach((agent,index)=>{
+        let tag="👍 Keep Going";
 
-container.innerHTML += `
-<div class="card">
+        if(index===0){
+            tag="🏆 Champion";
+        }
+        else if(index===1){
+            tag="🥈 Runner Up";
+        }
+        else if(index===2){
+            tag="🥉 Star Performer";
+        }
+        else if(agent.percent>=120){
+            tag="🔥 Superstar";
+        }
+        else if(agent.percent>=100){
+            tag="🎯 Target Achieved";
+        }
 
-<div class="rank">${medals[index]}</div>
+        container.innerHTML += `
+        <div class="card">
 
-<h2>${agent.name}</h2>
+            <h2>${agent.name}</h2>
 
-<p>Achievement: ${agent.achievement}</p>
+            <p><b>Commitment:</b> ${agent.commitment}</p>
 
-<h3>${agent.percent}%</h3>
+            <p><b>Achievement:</b> ${agent.achievement}</p>
 
-<button onclick="
-localStorage.setItem('name','${agent.name}');
-localStorage.setItem('achievement','${agent.achievement}');
-localStorage.setItem('percent','${agent.percent}');
-window.location.href='celebrate.html';
-">
-🎉 Celebrate
-</button>
+            <h2>${agent.percent}%</h2>
 
-</div>
-`;
+            <div class="tag">${tag}</div>
 
-});
+            <button onclick="
+                localStorage.setItem('name','${agent.name}');
+                localStorage.setItem('achievement','${agent.achievement}');
+                localStorage.setItem('percent','${agent.percent}');
+                window.location.href='celebrate.html';
+            ">
+                🎉 Celebrate
+            </button>
 
+        </div>
+        `;
+    });
+
+})
+.catch(error=>{
+    document.body.innerHTML =
+    '<h2>Unable to load Google Sheet data.</h2>';
 });
 
 </script>

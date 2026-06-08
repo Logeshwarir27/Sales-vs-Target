@@ -116,16 +116,16 @@ fetch(csvUrl)
     <h1>🏆 TOP 3 PERFORMERS 🏆</h1>
 
     <div style="font-size:40px;margin:20px 0;">
-        🥇 ${data[0]?.name || ""} - ${data[0].percent}%
-    </div>
+    🥇 ${data[0]?.name || ""} - ${data[0]?.percent || 0}%
+</div>
 
-    <div style="font-size:32px;margin:15px 0;">
-        🥈 ${data[0]?.name || ""} - ${data[1].percent}%
-    </div>
+<div style="font-size:32px;margin:15px 0;">
+    🥈 ${data[1]?.name || ""} - ${data[1]?.percent || 0}%
+</div>
 
-    <div style="font-size:28px;margin:15px 0;">
-        🥉 ${data[0]?.name || ""} - ${data[2].percent}%
-    </div>
+<div style="font-size:28px;margin:15px 0;">
+    🥉 ${data[2]?.name || ""} - ${data[2]?.percent || 0}%
+</div>
 </div>
 `;
 

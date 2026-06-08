@@ -109,6 +109,16 @@ fetch(csvUrl)
 
     data.sort((a,b)=>b.percent-a.percent);
 
+    const champion = data[0];
+
+document.getElementById("championBanner").innerHTML = `
+<div class="banner">
+    <h1>🏆 CHAMPION OF THE DAY 🏆</h1>
+    <div class="winner">${champion.name}</div>
+    <h2>${champion.achievement} Achievements | ${champion.percent}%</h2>
+</div>
+`;
+
     const container = document.getElementById("cards");
 
     data.forEach((agent,index)=>{

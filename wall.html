@@ -108,14 +108,23 @@ fetch(csvUrl)
 
     data.sort((a,b)=>b.percent-a.percent);
 
-    const champion = data[0];
+    document.getElementById("top3").innerHTML = `
+<div class="banner">
+    <h1>🏆 TOP 3 PERFORMERS 🏆</h1>
 
-    document.getElementById("championBanner").innerHTML = `
-        <div class="banner">
-            <h1>🏆 CHAMPION OF THE DAY 🏆</h1>
-            <div class="winner">${champion.name}</div>
-            <h2>${champion.percent}% Achievement</h2>
-        </div>
+    <div style="font-size:40px;margin:20px 0;">
+        🥇 ${data[0].name} - ${data[0].percent}%
+    </div>
+
+    <div style="font-size:32px;margin:15px 0;">
+        🥈 ${data[1].name} - ${data[1].percent}%
+    </div>
+
+    <div style="font-size:28px;margin:15px 0;">
+        🥉 ${data[2].name} - ${data[2].percent}%
+    </div>
+</div>
+`;
     `;
 
     const container = document.getElementById("cards");
@@ -153,14 +162,16 @@ fetch(csvUrl)
 
             <div class="tag">${tag}</div>
 
-            <button onclick="
-                localStorage.setItem('name','${agent.name}');
-                localStorage.setItem('achievement','${agent.achievement}');
-                localStorage.setItem('percent','${agent.percent}');
-                window.location.href='celebrate.html';
-            ">
-                🎉 Celebrate
-            </button>
+            ${index < 3 ? `
+<button onclick="
+    localStorage.setItem('name','${agent.name}');
+    localStorage.setItem('achievement','${agent.achievement}');
+    localStorage.setItem('percent','${agent.percent}');
+    window.location.href='celebrate.html';
+">
+    🎉 Celebrate
+</button>
+` : ''}
 
         </div>
         `;

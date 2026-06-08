@@ -68,8 +68,8 @@ Achievement: <span id="achievement"></span>
 Target Achievement: <span id="percent"></span>%
 </div>
 
-<img src="dance.gif">
-
+<img id="gif" src="">
+  
 <br>
 
 <button onclick="window.location.href='wall.html'">
@@ -79,11 +79,51 @@ Target Achievement: <span id="percent"></span>%
 </div>
 
 <audio id="song" autoplay>
-<source src="victory.mp3" type="audio/mpeg">
+<source id="musicSource" src="" type="audio/mpeg">
 </audio>
 
 <script>
 
+const agentName = localStorage.getItem("name");
+
+const agentFiles = {
+    "Praveen": {
+        gif: "praveen.gif",
+        music: "praveen.mp3"
+    },
+    "Prasanth": {
+        gif: "prasanth.gif",
+        music: "prasanth.mp3"
+    },
+    "Vaidy": {
+        gif: "vaidy.gif",
+        music: "vaidy.mp3"
+    },
+    "Hemakumar": {
+        gif: "hema.gif",
+        music: "hema.mp3"
+    },
+    "Nishar": {
+        gif: "nishar.gif",
+        music: "nishar.mp3"
+    },
+    "Manikandan": {
+        gif: "mani.gif",
+        music: "mani.mp3"
+    }
+};
+
+if(agentFiles[agentName]) {
+
+    document.getElementById("gif").src =
+        agentFiles[agentName].gif;
+
+    document.getElementById("musicSource").src =
+        agentFiles[agentName].music;
+
+    document.getElementById("song").load();
+}
+  
 document.getElementById("name").innerHTML =
 localStorage.getItem("name");
 

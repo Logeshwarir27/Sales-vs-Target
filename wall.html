@@ -111,10 +111,6 @@ fetch(csvUrl)
 
     data.sort((a,b)=>b.percent-a.percent);
 
-    document.getElementById("top3").innerHTML = `
-<div class="banner">
-    <h1>🏆 TOP 3 PERFORMERS 🏆</h1>
-
     <div style="font-size:40px;margin:20px 0;">
     🥇 ${data[0]?.name || ""} - ${data[0]?.percent || 0}%
 </div>

@@ -132,7 +132,24 @@ if(!allZeroCommitment){
 
 const champion = data[0];
 
-    document.getElementById("championBanner").innerHTML = `
+if(allZeroCommitment){
+
+document.getElementById("championBanner").innerHTML = `
+<div style="
+    background:#333;
+    color:white;
+    padding:40px;
+    text-align:center;
+    margin-bottom:40px;
+">
+    <h1>👍 KEEP GOING TEAM</h1>
+    <h2>Today's achievements haven't started yet.</h2>
+</div>
+`;
+
+}else{
+
+document.getElementById("championBanner").innerHTML = `
 
 <div style="
     background:linear-gradient(135deg,#b30000,#ff1a1a);

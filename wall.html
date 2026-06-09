@@ -123,163 +123,147 @@ fetch(csvUrl)
     const champion = data[0];
 
     document.getElementById("championBanner").innerHTML = `
-<div style="
-    background:linear-gradient(135deg,#b30000,#ff1a1a);
-    color:white;
-    padding:30px;
-    border-radius:25px;
-    max-width:1200px;
-    margin:0 auto 40px auto;
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
-">
-
     <div style="
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        flex-wrap:wrap;
-        gap:30px;
+        background:linear-gradient(135deg,#b30000,#ff1a1a);
+        color:white;
+        padding:30px;
+        border-radius:25px;
+        max-width:1200px;
+        margin:0 auto 40px auto;
+        box-shadow:0 8px 25px rgba(0,0,0,.25);
     ">
 
-        <!-- Logo -->
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:30px;
+            flex-wrap:wrap;
+        ">
 
-        <div>
             <img
                 src="foodhub-logo.png"
                 style="
                     height:120px;
                     width:auto;
-                    border-radius:12px;
                     background:white;
                     padding:10px;
+                    border-radius:12px;
                 "
             >
-        </div>
 
-        <!-- Champion Section -->
+            <div style="flex:1;text-align:center;">
 
-        <div style="flex:1;text-align:center;">
+                <div style="
+                    font-size:28px;
+                    font-weight:900;
+                    text-transform:uppercase;
+                    letter-spacing:2px;
+                ">
+                    🏆 Champion of the Day 🏆
+                </div>
 
-            <div style="
-                font-size:28px;
-                font-weight:900;
-                letter-spacing:2px;
-                text-transform:uppercase;
-            ">
-                🏆 Champion of the Day 🏆
+                <div style="
+                    font-size:64px;
+                    font-weight:900;
+                    margin:10px 0;
+                    text-shadow:3px 3px 8px rgba(0,0,0,.3);
+                ">
+                    ${champion.name}
+                </div>
+
+                <div style="
+                    font-size:30px;
+                    font-weight:700;
+                ">
+                    ${champion.achievement} Achievements
+                    &nbsp;|&nbsp;
+                    ${champion.percent}%
+                </div>
+
             </div>
 
             <div style="
-                font-size:64px;
-                font-weight:900;
-                color:#ffffff;
-                text-shadow:3px 3px 8px rgba(0,0,0,.3);
-                margin:10px 0;
+                background:white;
+                color:black;
+                padding:20px 30px;
+                border-radius:15px;
+                text-align:center;
+                box-shadow:0 5px 15px rgba(0,0,0,.2);
             ">
-                ${champion.name}
-            </div>
 
-            <div style="
-                font-size:30px;
-                font-weight:700;
-            ">
-                ${champion.achievement} Achievements
-                &nbsp;|&nbsp;
-                ${champion.percent}%
-            </div>
+                <div style="
+                    font-size:42px;
+                    font-weight:900;
+                    color:#b30000;
+                    line-height:1.1;
+                ">
+                    Foodhub Limited
+                </div>
 
-        </div>
+                <div style="
+                    font-size:38px;
+                    font-weight:800;
+                    margin-top:8px;
+                ">
+                    App Elite Team
+                </div>
 
-        <!-- Team Name -->
-
-        <div style="
-            background:white;
-            color:#111;
-            padding:20px 30px;
-            border-radius:15px;
-            box-shadow:0 5px 15px rgba(0,0,0,.15);
-            text-align:center;
-        ">
-
-            <div style="
-                font-size:34px;
-                font-weight:900;
-                color:#b30000;
-                line-height:1.2;
-            ">
-                Foodhub Limited
-            </div>
-
-            <div style="
-                font-size:32px;
-                font-weight:800;
-                margin-top:8px;
-            ">
-                App Elite Team
             </div>
 
         </div>
 
     </div>
-
-</div>
-`;
+    `;
 
     const container = document.getElementById("cards");
 
-data.forEach((agent,index)=>{
+    data.forEach((agent,index)=>{
 
-    let tag="👍 Keep Going";
+        let tag="👍 Keep Going";
 
-    if(index===0){
-        tag="🏆 Champion";
-    }
-    else if(index===1){
-        tag="🥈 Runner Up";
-    }
-    else if(index===2){
-        tag="🥉 Star Performer";
-    }
-    else if(agent.percent>=120){
-        tag="🔥 Superstar";
-    }
-    else if(agent.percent>=100){
-        tag="🎯 Target Achieved";
-    }
+        if(index===0){
+            tag="🏆 Champion";
+        }
+        else if(index===1){
+            tag="🥈 Runner Up";
+        }
+        else if(index===2){
+            tag="🥉 Star Performer";
+        }
+        else if(agent.percent>=120){
+            tag="🔥 Superstar";
+        }
+        else if(agent.percent>=100){
+            tag="🎯 Target Achieved";
+        }
 
-    container.innerHTML += `
-    <div class="card">
+        container.innerHTML += `
+        <div class="card">
 
-        <h2>${agent.name}</h2>
+            <h2>${agent.name}</h2>
 
-        <p><b>Commitment:</b> ${agent.commitment}</p>
+            <p><b>Commitment:</b> ${agent.commitment}</p>
 
-        <p><b>Achievement:</b> ${agent.achievement}</p>
+            <p><b>Achievement:</b> ${agent.achievement}</p>
 
-        <h2>${agent.percent}%</h2>
+            <h2>${agent.percent}%</h2>
 
-        <div class="tag">${tag}</div>
+            <div class="tag">${tag}</div>
 
-        ${index < 3 ? `
-        <button onclick="
-            localStorage.setItem('name','${agent.name}');
-            localStorage.setItem('achievement','${agent.achievement}');
-            localStorage.setItem('percent','${agent.percent}');
-            window.location.href='celebrate.html';
-        ">
-            🎉 Celebrate
-        </button>
-        ` : ''}
+            ${index < 3 ? `
+            <button onclick="
+                localStorage.setItem('name','${agent.name}');
+                localStorage.setItem('achievement','${agent.achievement}');
+                localStorage.setItem('percent','${agent.percent}');
+                window.location.href='celebrate.html';
+            ">
+                🎉 Celebrate
+            </button>
+            ` : ''}
 
-    </div>
-    
-});
-
-})
-.catch(error=>{
-    document.body.innerHTML =
-    '<h2>Unable to load Google Sheet data.</h2>';
-});
+        </div>
+        `;
     });
 
 })

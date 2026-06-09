@@ -126,8 +126,8 @@ fetch(csvUrl)
         console.log(cols[0], cols[1], Number(cols[1]));
     }
 
-    const allZeroCommitment = data.every(
-    agent => agent.commitment === 0
+    const allZeroCommitment = data.every(agent =>
+    !agent.commitment || agent.commitment <= 0
 );
 
 if(!allZeroCommitment){
@@ -136,7 +136,7 @@ if(!allZeroCommitment){
 
 const champion = data[0];
 
-if(allZeroCommitment){
+if(!hasAchievement){
 
 document.getElementById("championBanner").innerHTML = `
 <div style="

@@ -123,6 +123,7 @@ fetch(csvUrl)
             achievement: Number(cols[2]),
             percent: Number(cols[3])
         });
+        console.log(cols[0], cols[1], Number(cols[1]));
     }
 
     const allZeroCommitment = data.every(

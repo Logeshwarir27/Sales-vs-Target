@@ -84,11 +84,6 @@ button:hover{
 <div class="container" id="cards"></div>
     
 <script>
-...
-</script>
-
-</body>
-</html>
 
 const csvUrl =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vT86iyMQe8vOD42IvzodWizQcMggjYD7PSP71n4MlcgcfwONLnlbn3AwDziRfKX097mHo3RP8PY1oCv/pub?output=csv";
@@ -114,6 +109,12 @@ fetch(csvUrl)
             achievement: Number(cols[2]),
             percent: Number(cols[3])
         });
+
+</script>
+
+</body>
+</html>
+
     }
 
     data.sort((a,b)=>b.percent-a.percent);

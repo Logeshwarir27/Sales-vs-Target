@@ -146,9 +146,40 @@ fetch(csvUrl)
 
 document.getElementById("championBanner").innerHTML = `
 <div class="banner">
-    <h1>🏆 CHAMPION OF THE DAY 🏆</h1>
-    <div class="winner">${champion.name}</div>
-    <h2>${champion.achievement} Achievements | ${champion.percent}%</h2>
+
+    <div style="
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:30px;
+    ">
+
+        <img
+            src="foodhub-logo.png"
+            style="
+                height:120px;
+                width:auto;
+                border-radius:10px;
+            "
+        >
+
+        <div>
+
+            <h1>🏆 CHAMPION OF THE DAY 🏆</h1>
+
+            <div class="winner">
+                ${champion.name}
+            </div>
+
+            <h2>
+                ${champion.achievement} Achievements |
+                ${champion.percent}%
+            </h2>
+
+        </div>
+
+    </div>
+
 </div>
 `;
 

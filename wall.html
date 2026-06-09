@@ -257,7 +257,9 @@ document.getElementById("championBanner").innerHTML = `
 </div>
 
 `;
-    const container = document.getElementById("cards");
+}
+
+const container = document.getElementById("cards");
 
     data.forEach((agent,index)=>{
 
@@ -282,12 +284,6 @@ if(!allZeroCommitment){
     }
 
 }
-        else if(agent.percent>=120){
-            tag="🔥 Superstar";
-        }
-        else if(agent.percent>=100){
-            tag="🎯 Target Achieved";
-        }
 
         container.innerHTML += `
         <div class="card">

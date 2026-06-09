@@ -122,9 +122,15 @@ fetch(csvUrl)
         });
     }
 
-    data.sort((a,b)=>b.percent-a.percent);
+    const allZeroCommitment = data.every(
+    agent => agent.commitment === 0
+);
 
-    const champion = data[0];
+if(!allZeroCommitment){
+    data.sort((a,b)=>b.percent-a.percent);
+}
+
+const champion = data[0];
 
     document.getElementById("championBanner").innerHTML = `
 

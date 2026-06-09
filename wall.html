@@ -94,23 +94,21 @@ button:hover{
 
 <body>
 
-.header{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    justify-content:center;
-    gap:25px;
-    margin-bottom:20px;
-}
+<div class="header">
 
-.title-section{
-    text-align:left;
-}
+    <img src="foodhub-logo.png" class="logo">
 
-.logo{
-    height:120px;
-    width:auto;
-}
+    <div class="title-section">
+        <h1>Foodhub - APP ELITE Team</h1>
+    </div>
+
+</div>
+
+<div id="championBanner"></div>
+
+<h1>🏆 DAILY ACHIEVEMENT WALL 🏆</h1>
+
+<div class="container" id="cards"></div>
 
 <div id="championBanner"></div>
 
@@ -119,17 +117,6 @@ button:hover{
 <div class="container" id="cards"></div>
     
 <script>
-
-const today = new Date();
-
-window.onload = function(){
-    document.getElementById("todayDate").innerHTML =
-    today.toLocaleDateString("en-GB",{
-        day:"2-digit",
-        month:"long",
-        year:"numeric"
-    });
-};
 
 const csvUrl =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vT86iyMQe8vOD42IvzodWizQcMggjYD7PSP71n4MlcgcfwONLnlbn3AwDziRfKX097mHo3RP8PY1oCv/pub?output=csv";

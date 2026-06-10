@@ -30,8 +30,41 @@ fetch(csvUrl)
 
     console.log("DATA:", data);
 
-    document.getElementById("cards").innerHTML =
-        "<h3>Data Loaded Successfully ✔</h3>";
+    data.sort((a,b)=>(b.percent||0)-(a.percent||0));
+
+let html = "";
+
+data.forEach((agent,index)=>{
+
+    let tag = "👍 Keep Going";
+
+    if(agent.percent >= 120){
+        tag = "🔥 Superstar";
+    }
+    else if(agent.percent >= 100){
+        tag = "🎯 Target Achieved";
+    }
+    else if(index === 0){
+        tag = "🏆 Champion";
+    }
+    else if(index === 1){
+        tag = "🥈 Runner Up";
+    }
+    else if(index === 2){
+        tag = "🥉 Star Performer";
+    }
+
+    html += `
+    <div class="card">
+        <h2>${agent.name}</h2>
+        <p><b>Commitment:</b> ${agent.commitment}</p>
+        <p><b>Achievement:</b> ${agent.achievement}</p>
+        <h2>${agent.percent}%</h2>
+        <div class="tag">${tag}</div>
+    </div>`;
+});
+
+document.getElementById("cards").innerHTML = html;
 
 })
 .catch(err => {

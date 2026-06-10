@@ -264,7 +264,7 @@ data.some(agent => agent.percent >= 100);
 
             <div class="tag">${tag}</div>
 
-            ${hasAchievement && index < 3 ? `
+            ${agent.percent >= 100 ? `
             <button onclick="
                 localStorage.setItem('name','${agent.name}');
                 localStorage.setItem('achievement','${agent.achievement}');

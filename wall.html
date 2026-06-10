@@ -127,7 +127,11 @@ fetch(csvUrl)
     !agent.commitment || agent.commitment <= 0
 );
 
-if(!allZeroCommitment){
+    const hasAchievement = data.some(agent =>
+    agent.achievement > 0
+);
+
+if(hasAchievement){
     data.sort((a,b)=>b.percent-a.percent);
 }
 

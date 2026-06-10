@@ -271,57 +271,42 @@ document.getElementById("championBanner").innerHTML = `
 
 const container = document.getElementById("cards");
 
-    data.forEach((agent,index)=>{
+  let html = "";
 
-        let tag="👍 Keep Going";
+data.forEach((agent,index)=>{
 
-if(hasAchievement){
+    let tag="👍 Keep Going";
 
-    if(index===0){
-        tag="🏆 Champion";
-    }
-    else if(index===1){
-        tag="🥈 Runner Up";
-    }
-    else if(index===2){
-        tag="🥉 Star Performer";
-    }
-    else if(agent.percent>=120){
-        tag="🔥 Superstar";
-    }
-    else if(agent.percent>=100){
-        tag="🎯 Target Achieved";
+    if(hasAchievement){
+        if(index===0) tag="🏆 Champion";
+        else if(index===1) tag="🥈 Runner Up";
+        else if(index===2) tag="🥉 Star Performer";
+        else if(agent.percent>=120) tag="🔥 Superstar";
+        else if(agent.percent>=100) tag="🎯 Target Achieved";
     }
 
-}
+    html += `
+    <div class="card">
+        <h2>${agent.name}</h2>
+        <p><b>Commitment:</b> ${agent.commitment}</p>
+        <p><b>Achievement:</b> ${agent.achievement}</p>
+        <h2>${agent.percent}%</h2>
+        <div class="tag">${tag}</div>
 
-        container.innerHTML += `
-        <div class="card">
+        ${hasAchievement && index < 3 ? `
+        <button onclick="
+            localStorage.setItem('name','${agent.name}');
+            localStorage.setItem('achievement','${agent.achievement}');
+            localStorage.setItem('percent','${agent.percent}');
+            window.location.href='celebrate.html';
+        ">
+            🎉 Celebrate
+        </button>
+        ` : ''}
+    </div>`;
+});
 
-            <h2>${agent.name}</h2>
-
-            <p><b>Commitment:</b> ${agent.commitment}</p>
-
-            <p><b>Achievement:</b> ${agent.achievement}</p>
-
-            <h2>${agent.percent}%</h2>
-
-            <div class="tag">${tag}</div>
-
-            ${hasAchievement && index < 3 ? `
-            <button onclick="
-                localStorage.setItem('name','${agent.name}');
-                localStorage.setItem('achievement','${agent.achievement}');
-                localStorage.setItem('percent','${agent.percent}');
-                window.location.href='celebrate.html';
-            ">
-                🎉 Celebrate
-            </button>
-            ` : ''}
-
-        </div>
-        `;
-    });
+container.innerHTML = html; 
 
 })
 .catch(error=>{

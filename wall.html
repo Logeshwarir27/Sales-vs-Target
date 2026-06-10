@@ -270,7 +270,7 @@ const container = document.getElementById("cards");
 
         let tag="👍 Keep Going";
 
-if(!allZeroCommitment){
+if(hasAchievement){
 
     if(index===0){
         tag="🏆 Champion";
@@ -303,7 +303,7 @@ if(!allZeroCommitment){
 
             <div class="tag">${tag}</div>
 
-            ${!allZeroCommitment && index < 3 ? `
+            ${hasAchievement && index < 3 ? `
             <button onclick="
                 localStorage.setItem('name','${agent.name}');
                 localStorage.setItem('achievement','${agent.achievement}');

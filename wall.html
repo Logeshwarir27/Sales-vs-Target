@@ -212,6 +212,8 @@ fetch(csvUrl)
 })
 .catch(error => {
 
+    console.error(error);
+
     document.body.innerHTML =
     "<h2>Unable to load Google Sheet data.</h2>";
 

@@ -267,6 +267,12 @@ const container = document.getElementById("cards");
 
   let html = "";
 
+    if (!data.length) {
+    document.getElementById("cards").innerHTML =
+        "<h2>No data available</h2>";
+    return;
+}
+
 data.forEach((agent,index)=>{
 
     let tag="👍 Keep Going";

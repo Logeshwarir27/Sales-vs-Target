@@ -110,15 +110,15 @@ fetch(csvUrl)
 
     for(let i=1;i<rows.length;i++){
 
-        const cols = rows[i].split(",");
-
+const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        
         if(cols.length < 4) continue;
 
         data.push({
             name: cols[0].trim(),
-            commitment: Number(cols[1]),
-            achievement: Number(cols[2]),
-            percent: Number(cols[3])
+            ccommitment: parseFloat(cols[1]) || 0,
+achievement: parseFloat(cols[2]) || 0,
+percent: parseFloat(cols[3]) || 0,
         });
         data.push({
     name: cols[0].trim(),
@@ -129,10 +129,6 @@ fetch(csvUrl)
         console.log(cols[0], cols[1], Number(cols[1]));
     }
 
-    const allZeroCommitment = data.every(agent =>
-    !agent.commitment || agent.commitment <= 0
-);
-
     const hasAchievement = data.some(agent =>
     Number(agent.achievement) > 0
 );
@@ -141,11 +137,11 @@ fetch(csvUrl)
 console.log(data);
 
 if(hasAchievement){
-    data.sort((a,b)=>b.percent-a.percent);
+   data.sort((a,b)=>(b.percent||0)-(a.percent||0));
 }
 
-const champion = data[0];
-
+const champion = data.length ? data[0] : null;
+    
 if(!hasAchievement){
 
 document.getElementById("championBanner").innerHTML = `
@@ -222,7 +218,7 @@ document.getElementById("championBanner").innerHTML = `
                 margin:10px 0;
                 text-shadow:3px 3px 8px rgba(0,0,0,.3);
             ">
-                ${champion.name}
+                ${champion ? champion.name : "No Data"}
             </div>
 
             <div style="

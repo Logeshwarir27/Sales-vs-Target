@@ -10,6 +10,10 @@ fetch(csvUrl)
     const banner = document.getElementById("championBanner");
     const container = document.getElementById("cards");
 
+    if(!banner || !container){
+        throw new Error("championBanner or cards container not found");
+    }
+
     const rows = csv.trim().split("\n");
     const data = [];
 
@@ -27,11 +31,14 @@ fetch(csvUrl)
         });
     }
 
-    const achievers = data.filter(agent => agent.percent >= 100);
-
     data.sort((a,b) => b.percent - a.percent);
 
-    if(achievers.length === 0){
+    const achievers =
+    data.filter(agent => agent.percent >= 100);
+
+    if(achievers.length > 0){
+
+        const champion = achievers[0];
 
         banner.innerHTML = `
         <div style="
@@ -50,13 +57,15 @@ fetch(csvUrl)
             ">
 
                 <div style="width:280px;text-align:center;">
-                    <img src="foodhub-logo.png"
-                    style="
-                        height:140px;
-                        background:white;
-                        padding:10px;
-                        border-radius:12px;
-                    ">
+                    <img
+                        src="foodhub-logo.png"
+                        style="
+                            height:140px;
+                            background:white;
+                            padding:10px;
+                            border-radius:12px;
+                        "
+                    >
                 </div>
 
                 <div style="flex:1;text-align:center;">
@@ -65,22 +74,23 @@ fetch(csvUrl)
                         font-size:30px;
                         font-weight:900;
                     ">
-                        👍 KEEP GOING TEAM
+                        🏆 CHAMPION OF THE DAY 🏆
                     </div>
 
                     <div style="
-                        font-size:55px;
+                        font-size:60px;
                         font-weight:900;
                         margin:10px 0;
                     ">
-                        No Champion Yet
+                        ${champion.name}
                     </div>
 
                     <div style="
-                        font-size:28px;
+                        font-size:32px;
                         font-weight:700;
                     ">
-                        Waiting for the first 100% achiever
+                        ${champion.achievement} Achievements |
+                        ${champion.percent}%
                     </div>
 
                 </div>
@@ -119,8 +129,6 @@ fetch(csvUrl)
 
     } else {
 
-        const champion = achievers[0];
-
         banner.innerHTML = `
         <div style="
             background:linear-gradient(135deg,#b30000,#ff1a1a);
@@ -138,13 +146,15 @@ fetch(csvUrl)
             ">
 
                 <div style="width:280px;text-align:center;">
-                    <img src="foodhub-logo.png"
-                    style="
-                        height:140px;
-                        background:white;
-                        padding:10px;
-                        border-radius:12px;
-                    ">
+                    <img
+                        src="foodhub-logo.png"
+                        style="
+                            height:140px;
+                            background:white;
+                            padding:10px;
+                            border-radius:12px;
+                        "
+                    >
                 </div>
 
                 <div style="flex:1;text-align:center;">
@@ -153,23 +163,22 @@ fetch(csvUrl)
                         font-size:30px;
                         font-weight:900;
                     ">
-                        🏆 CHAMPION OF THE DAY 🏆
+                        👍 KEEP GOING TEAM
                     </div>
 
                     <div style="
-                        font-size:60px;
+                        font-size:55px;
                         font-weight:900;
                         margin:10px 0;
                     ">
-                        ${champion.name}
+                        No Champion Yet
                     </div>
 
                     <div style="
-                        font-size:32px;
+                        font-size:28px;
                         font-weight:700;
                     ">
-                        ${champion.achievement} Achievements |
-                        ${champion.percent}%
+                        Waiting for the first 100% achiever
                     </div>
 
                 </div>
@@ -243,12 +252,7 @@ fetch(csvUrl)
             <div class="tag">${tag}</div>
 
             ${agent.percent >= 100 ? `
-            <button onclick="
-                localStorage.setItem('name','${agent.name}');
-                localStorage.setItem('achievement','${agent.achievement}');
-                localStorage.setItem('percent','${agent.percent}');
-                window.location.href='celebrate.html';
-            ">
+            <button onclick="celebrateAgent('${agent.name}',${agent.achievement},${agent.percent})">
                 🎉 Celebrate
             </button>
             ` : ''}
@@ -257,14 +261,15 @@ fetch(csvUrl)
         `;
     });
 
-})
-.catch(error => {
-
-    console.error(error);
-
-    document.body.innerHTML =
-    "<h2>Unable to load Google Sheet data.</h2>";
-
 });
+
+function celebrateAgent(name,achievement,percent){
+
+    localStorage.setItem("name",name);
+    localStorage.setItem("achievement",achievement);
+    localStorage.setItem("percent",percent);
+
+    window.location.href = "celebrate.html";
+}
 
 </script>

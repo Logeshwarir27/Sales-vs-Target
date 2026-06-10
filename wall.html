@@ -1,13 +1,10 @@
-const csvUrl =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vT86iyMQe8vOD42IvzodWizQcMggjYD7PSP71n4MlcgcfwONLnlbn3AwDziRfKX097mHo3RP8PY1oCv/pub?output=csv";
+const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT86iyMQe8vOD42IvzodWizQcMggjYD7PSP71n4MlcgcfwONLnlbn3AwDziRfKX097mHo3RP8PY1oCv/pub?output=csv";
 
 fetch(csvUrl)
 .then(async (res) => {
-
     if (!res.ok) {
         throw new Error("HTTP Error: " + res.status);
     }
-
     return res.text();
 })
 .then(csv => {
@@ -20,6 +17,7 @@ fetch(csvUrl)
     for (let i = 1; i < rows.length; i++) {
 
         const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+
         if (cols.length < 4) continue;
 
         data.push({

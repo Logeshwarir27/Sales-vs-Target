@@ -272,22 +272,22 @@ data.forEach((agent,index)=>{
     let tag="👍 Keep Going";
 
     if(hasAchievement){
-        if(agent.percent>=120){
-    tag="🔥 Superstar";
+        if (index === 0) {
+    tag = "🏆 Champion";
 }
-else if(agent.percent>=100){
-    tag="🎯 Target Achieved";
+else if (index === 1) {
+    tag = "🥈 Runner Up";
 }
-else if(index===0){
-    tag="🏆 Champion";
+else if (index === 2) {
+    tag = "🥉 Star Performer";
 }
-else if(index===1){
-    tag="🥈 Runner Up";
+else if (agent.percent >= 120) {
+    tag = "🔥 Superstar";
 }
-else if(index===2){
-    tag="🥉 Star Performer";
+else if (agent.percent >= 100) {
+    tag = "🎯 Target Achieved";
 }
-
+        
     html += `
     <div class="card">
         <h2>${agent.name}</h2>

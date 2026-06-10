@@ -115,12 +115,6 @@ const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
         if(cols.length < 4) continue;
 
         data.push({
-            name: cols[0].trim(),
-            ccommitment: parseFloat(cols[1]) || 0,
-achievement: parseFloat(cols[2]) || 0,
-percent: parseFloat(cols[3]) || 0,
-        });
-        data.push({
     name: cols[0].trim(),
     commitment: Number(cols[1]),
     achievement: Number(cols[2]),

@@ -1,25 +1,26 @@
-<script>
-
 const csvUrl =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vT86iyMQe8vOD42IvzodWizQcMggjYD7PSP71n4MlcgcfwONLnlbn3AwDziRfKX097mHo3RP8PY1oCv/pub?output=csv";
 
-// Safe HTML escape
-const escapeHTML = (str) =>
-String(str || "").replace(/[&<>"']/g, m => ({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[m]));
-
 fetch(csvUrl)
-.then(res => res.text())
+.then(async (res) => {
+
+    if (!res.ok) {
+        throw new Error("HTTP Error: " + res.status);
+    }
+
+    return res.text();
+})
 .then(csv => {
+
+    console.log("CSV LOADED SUCCESSFULLY");
 
     const rows = csv.trim().split("\n");
     const data = [];
 
-    for(let i=1;i<rows.length;i++){
+    for (let i = 1; i < rows.length; i++) {
 
         const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-        if(cols.length < 4) continue;
+        if (cols.length < 4) continue;
 
         data.push({
             name: cols[0].trim(),
@@ -29,120 +30,16 @@ fetch(csvUrl)
         });
     }
 
-    const hasAchievement = data.some(a => a.achievement > 0);
+    console.log("DATA:", data);
 
-    if(hasAchievement){
-        data.sort((a,b)=>(b.percent||0)-(a.percent||0));
-    }
-
-    const champion = hasAchievement && data.length ? data[0] : null;
-
-    // ===== BANNER =====
-    const banner = document.getElementById("championBanner");
-
-    if(!hasAchievement){
-        banner.innerHTML = `
-        <div style="background:#333;color:white;padding:40px;margin-bottom:40px;">
-            <h1>👍 KEEP GOING TEAM</h1>
-            <h2>Today's achievements haven't started yet.</h2>
-        </div>`;
-    } else {
-        banner.innerHTML = `
-        <div style="background:linear-gradient(135deg,#b30000,#ff1a1a);
-        color:white;padding:40px;border-radius:25px;margin-bottom:40px;
-        box-shadow:0 8px 25px rgba(0,0,0,.25);">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:30px;">
-
-                <div style="width:280px;text-align:center;">
-                    <img src="foodhub-logo.png"
-                        style="height:140px;background:white;padding:10px;border-radius:12px;">
-                </div>
-
-                <div style="flex:1;text-align:center;">
-                    <div style="font-size:28px;font-weight:900;">
-                        🏆 CHAMPION OF THE DAY 🏆
-                    </div>
-
-                    <div style="font-size:60px;font-weight:900;margin:10px 0;">
-                        ${champion ? escapeHTML(champion.name) : "No Data"}
-                    </div>
-
-                    <div style="font-size:32px;font-weight:700;">
-                        ${champion ? champion.achievement : 0} Achievements | ${champion ? champion.percent : 0}%
-                    </div>
-                </div>
-
-                <div style="width:420px;background:white;color:black;padding:25px;border-radius:15px;">
-                    <div style="font-size:52px;font-weight:900;color:#b30000;">
-                        FOODHUB LIMITED
-                    </div>
-                    <div style="font-size:40px;font-weight:900;">
-                        APP ELITE TEAM
-                    </div>
-                </div>
-
-            </div>
-        </div>`;
-    }
-
-    // ===== CARDS =====
-    const container = document.getElementById("cards");
-
-    if(!data.length){
-        container.innerHTML = "<h2>No data available</h2>";
-        return;
-    }
-
-    let html = "";
-
-    data.forEach((agent,index)=>{
-
-        let tag = "👍 Keep Going";
-
-        if(agent.percent >= 120){
-            tag = "🔥 Superstar";
-        }
-        else if(agent.percent >= 100){
-            tag = "🎯 Target Achieved";
-        }
-        else if(index === 0){
-            tag = "🏆 Champion";
-        }
-        else if(index === 1){
-            tag = "🥈 Runner Up";
-        }
-        else if(index === 2){
-            tag = "🥉 Star Performer";
-        }
-
-        html += `
-        <div class="card">
-            <h2>${escapeHTML(agent.name)}</h2>
-            <p><b>Commitment:</b> ${agent.commitment}</p>
-            <p><b>Achievement:</b> ${agent.achievement}</p>
-            <h2>${agent.percent}%</h2>
-            <div class="tag">${tag}</div>
-
-            ${hasAchievement && index < 3 ? `
-            <button onclick="
-                localStorage.setItem('name','${escapeHTML(agent.name)}');
-                localStorage.setItem('achievement','${agent.achievement}');
-                localStorage.setItem('percent','${agent.percent}');
-                window.location.href='celebrate.html';
-            ">
-                🎉 Celebrate
-            </button>
-            ` : ''}
-        </div>`;
-    });
-
-    container.innerHTML = html;
+    document.getElementById("cards").innerHTML =
+        "<h3>Data Loaded Successfully ✔</h3>";
 
 })
-.catch(() => {
-    document.body.innerHTML =
-    "<h2>Unable to load Google Sheet data.</h2>";
-});
+.catch(err => {
 
-</script>
+    console.error("FETCH FAILED:", err);
+
+    document.getElementById("cards").innerHTML =
+        "<h2>Fetch Failed</h2><p>Open console (F12) → check error</p>";
+});

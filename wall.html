@@ -219,8 +219,8 @@ document.getElementById("championBanner").innerHTML = `
                 font-size:32px;
                 font-weight:700;
             ">
-                ${champion.achievement} Achievements |
-                ${champion.percent}%
+                ${champion ? champion.achievement : 0} Achievements |
+${champion ? champion.percent : 0}%
             </div>
 
         </div>

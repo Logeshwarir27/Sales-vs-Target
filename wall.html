@@ -111,7 +111,7 @@ fetch(csvUrl)
     }
 
     const hasAchievement =
-    data.some(agent => agent.achievement > 0);
+data.some(agent => agent.percent >= 100);
 
     if(hasAchievement){
         data.sort((a,b) => b.percent - a.percent);

@@ -98,6 +98,42 @@ fetch(csvUrl)
     const achievers =
     data.filter(agent => agent.percent >= 100);
 
+    const todayChampion = achievers.length > 0 ? achievers[0].name : "";
+
+if(todayChampion){
+
+    const lastChampion =
+    localStorage.getItem("lastChampion");
+
+    if(lastChampion !== todayChampion){
+
+        localStorage.setItem(
+            "lastChampion",
+            todayChampion
+        );
+
+        localStorage.setItem(
+            "name",
+            achievers[0].name
+        );
+
+        localStorage.setItem(
+            "achievement",
+            achievers[0].achievement
+        );
+
+        localStorage.setItem(
+            "percent",
+            achievers[0].percent
+        );
+
+        setTimeout(() => {
+            window.location.href =
+            "celebrate.html";
+        }, 1000);
+    }
+}
+
     if(achievers.length > 0){
 
         const champion = achievers[0];

@@ -347,6 +347,16 @@ fetch(csvUrl)
 
             <div class="tag">${tag}</div>
 
+${agent.percent >= 100 ? `
+<img
+src="champion.gif"
+style="
+width:100%;
+border-radius:10px;
+margin-top:10px;
+">
+` : ''}
+
             ${agent.percent >= 100 ? `
             <button onclick="celebrateAgent('${agent.name}',${agent.achievement},${agent.percent})">
                 🎉 Celebrate

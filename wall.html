@@ -325,8 +325,9 @@ fetch(csvUrl)
 
 });
 
-function celebrateAgent(name,achievement,percent){
-
+setInterval(() => {
+    location.reload();
+}, 30000);
     localStorage.setItem("name",name);
     localStorage.setItem("achievement",achievement);
     localStorage.setItem("percent",percent);

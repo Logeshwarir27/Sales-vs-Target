@@ -325,9 +325,14 @@ fetch(csvUrl)
 
 });
 
+// Auto refresh every 30 seconds
 setInterval(() => {
     location.reload();
 }, 30000);
+
+// Celebrate button function
+function celebrateAgent(name,achievement,percent){
+
     localStorage.setItem("name",name);
     localStorage.setItem("achievement",achievement);
     localStorage.setItem("percent",percent);
